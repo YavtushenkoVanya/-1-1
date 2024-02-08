@@ -1,0 +1,61 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        // Створення форми
+        Form form = new Form();
+        form.Text = "Кількість цифр із найбільшим значенням";
+
+        // Створення елемента TextBox для введення числа
+        TextBox textBox = new TextBox();
+        textBox.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBox);
+
+        // Створення елемента Button для підтвердження введення
+        Button button = new Button();
+        button.Text = "Визначити";
+        button.Location = new System.Drawing.Point(10, 40);
+        button.Click += (sender, e) =>
+        {
+            // Обробка події натискання на кнопку
+            try
+            {
+                int n = int.Parse(textBox.Text);
+
+                int maxDigit = 0;
+                int maxCount = 0;
+
+                // Знаходимо найбільшу цифру
+                while (n > 0)
+                {
+                    int digit = n % 10;
+                    if (digit > maxDigit)
+                    {
+                        maxDigit = digit;
+                        maxCount = 1;
+                    }
+                    else if (digit == maxDigit)
+                    {
+                        maxCount++;
+                    }
+
+                    n /= 10;
+                }
+
+                MessageBox.Show($"Кількість цифр із найбільшим значенням ({maxDigit}): {maxCount}");
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        // Відображення форми
+        Application.Run(form);
+    }
+}
