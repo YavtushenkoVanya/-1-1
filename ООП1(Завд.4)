@@ -1,0 +1,71 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        // Створення форми
+        Form form = new Form();
+        form.Text = "Визначення числа, яке дорівнює d";
+
+        // Створення елементів TextBox для введення a, b, c, і d
+        TextBox textBoxA = new TextBox();
+        TextBox textBoxB = new TextBox();
+        TextBox textBoxC = new TextBox();
+        TextBox textBoxD = new TextBox();
+
+        textBoxA.Location = new System.Drawing.Point(10, 10);
+        textBoxB.Location = new System.Drawing.Point(10, 40);
+        textBoxC.Location = new System.Drawing.Point(10, 70);
+        textBoxD.Location = new System.Drawing.Point(10, 100);
+
+        form.Controls.Add(textBoxA);
+        form.Controls.Add(textBoxB);
+        form.Controls.Add(textBoxC);
+        form.Controls.Add(textBoxD);
+
+        // Створення елемента Button для підтвердження введення
+        Button button = new Button();
+        button.Text = "Визначити";
+        button.Location = new System.Drawing.Point(10, 130);
+        button.Click += (sender, e) =>
+        {
+            // Обробка події натискання на кнопку
+            try
+            {
+                int a = int.Parse(textBoxA.Text);
+                int b = int.Parse(textBoxB.Text);
+                int c = int.Parse(textBoxC.Text);
+                int d = int.Parse(textBoxD.Text);
+
+                if (a == d)
+                {
+                    MessageBox.Show($"a дорівнює d: {a}");
+                }
+                else if (b == d)
+                {
+                    MessageBox.Show($"b дорівнює d: {b}");
+                }
+                else if (c == d)
+                {
+                    MessageBox.Show($"c дорівнює d: {c}");
+                }
+                else
+                {
+                    int maxDifference = Math.Max(d - a, Math.Max(d - b, d - c));
+                    MessageBox.Show($"Найбільша різниця: {maxDifference}");
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        // Відображення форми
+        Application.Run(form);
+    }
+}
