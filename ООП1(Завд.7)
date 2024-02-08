@@ -1,0 +1,53 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        // Створення форми
+        Form form = new Form();
+        form.Text = "Підрахувати символи до та після крапки з комою";
+
+        // Створення елемента TextBox для введення рядка
+        TextBox textBox = new TextBox();
+        textBox.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBox);
+
+        // Створення елемента Button для підтвердження введення
+        Button button = new Button();
+        button.Text = "Підрахувати";
+        button.Location = new System.Drawing.Point(10, 40);
+        button.Click += (sender, e) =>
+        {
+            // Обробка події натискання на кнопку
+            try
+            {
+                string inputString = textBox.Text;
+                int index = inputString.IndexOf(';');
+
+                if (index != -1)
+                {
+                    string beforeSemicolon = inputString.Substring(0, index);
+                    string afterSemicolon = inputString.Substring(index + 1);
+
+                    MessageBox.Show($"Кількість символів до крапки з комою: {beforeSemicolon.Length}\n" +
+                                    $"Кількість символів після крапки з комою: {afterSemicolon.Length}");
+                }
+                else
+                {
+                    MessageBox.Show("Крапка з комою не знайдена у рядку.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка: {ex.Message}");
+            }
+        };
+        form.Controls.Add(button);
+
+        // Відображення форми
+        Application.Run(form);
+    }
+}
