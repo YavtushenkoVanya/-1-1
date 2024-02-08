@@ -1,0 +1,60 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        // Створення форми
+        Form form = new Form();
+        form.Text = "Перевірка на паліндром";
+
+        // Створення елемента TextBox для введення числа
+        TextBox textBox = new TextBox();
+        textBox.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBox);
+
+        // Створення елемента Button для підтвердження введення
+        Button button = new Button();
+        button.Text = "Перевірити";
+        button.Location = new System.Drawing.Point(10, 40);
+        button.Click += (sender, e) =>
+        {
+            // Обробка події натискання на кнопку
+            try
+            {
+                int number = int.Parse(textBox.Text);
+
+                if (number >= 1000 && number <= 9999)
+                {
+                    string numberString = number.ToString();
+                    bool isPalindrome = true;
+
+                    for (int i = 0; i < numberString.Length / 2; i++)
+                    {
+                        if (numberString[i] != numberString[numberString.Length - 1 - i])
+                        {
+                            isPalindrome = false;
+                            break;
+                        }
+                    }
+
+                    MessageBox.Show($"Результат: {isPalindrome}");
+                }
+                else
+                {
+                    MessageBox.Show("Введіть чотиризначне число.");
+                }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Невірний формат числа!");
+            }
+        };
+        form.Controls.Add(button);
+
+        // Відображення форми
+        Application.Run(form);
+    }
+}
