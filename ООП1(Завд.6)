@@ -1,0 +1,66 @@
+using System;
+using System.Windows.Forms;
+
+class Program
+{
+    [STAThread]
+    static void Main()
+    {
+        // Створення форми
+        Form form = new Form();
+        form.Text = "Переставити нулі та одиниці";
+
+        // Створення елемента TextBox для введення послідовності
+        TextBox textBox = new TextBox();
+        textBox.Location = new System.Drawing.Point(10, 10);
+        form.Controls.Add(textBox);
+
+        // Створення елемента Button для підтвердження введення
+        Button button = new Button();
+        button.Text = "Переставити";
+        button.Location = new System.Drawing.Point(10, 40);
+        button.Click += (sender, e) =>
+        {
+            // Обробка події натискання на кнопку
+            try
+            {
+                string sequence = textBox.Text;
+                string rearrangedSequence = RearrangeZerosAndOnes(sequence);
+
+                MessageBox.Show($"Переставлена послідовність: {rearrangedSequence}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка: {ex.Message}");
+            }
+        };
+        form.Controls.Add(button);
+
+        // Відображення форми
+        Application.Run(form);
+    }
+
+    static string RearrangeZerosAndOnes(string sequence)
+    {
+        int zeroCount = 0;
+        int oneCount = 0;
+
+        foreach (char digit in sequence)
+        {
+            if (digit == '0')
+            {
+                zeroCount++;
+            }
+            else if (digit == '1')
+            {
+                oneCount++;
+            }
+            else
+            {
+                throw new ArgumentException("Послідовність повинна складатися лише з нулів і одиниць.");
+            }
+        }
+
+        return new string('0', zeroCount) + new string('1', oneCount);
+    }
+}
